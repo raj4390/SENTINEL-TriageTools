@@ -146,5 +146,3 @@ The HIC 15 value is 123.45 and was achieved between the time window of 0.05:0.07
   | End                                 |
   +-------------------------------------+
 ```
-
-This flow chart visually represents the execution of the script.
