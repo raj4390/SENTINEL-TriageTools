@@ -148,5 +148,5 @@ The HIC 15 value is 123.45 and was achieved between the time window of 0.05:0.07
 ```
 ---
 ### Reference
-[1] Kleinberger, M., Sun, E., Eppinger, R., Kuppa, S., & Saul, R. (1998). Development of improved injury criteria for the assessment of advanced automotive restraint systems. NHTSA Docket 4405.9, 12–17. https://www.nhtsa.gov/sites/nhtsa.gov/files/criteria_0.pdf
-[2] https://help.oasys-software.com/articles/#!this-20-0/standard-sae-filter-options
+1. Kleinberger, M., Sun, E., Eppinger, R., Kuppa, S., & Saul, R. (1998). Development of improved injury criteria for the assessment of advanced automotive restraint systems. NHTSA Docket 4405.9, 12–17. https://www.nhtsa.gov/sites/nhtsa.gov/files/criteria_0.pdf
+1. https://help.oasys-software.com/articles/#!this-20-0/standard-sae-filter-options
