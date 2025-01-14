@@ -2,8 +2,6 @@
 
 The SI, introduced by Gadd (1966), aimed to address the limitation of the WSTC by incorporating acceleration magnitude. It operates on the premise that the severity of the head injury depends on both the acceleration and the duration of the pulse. The SI is defined as:
 
-The general expression for SI is:
-
 $$ SI =\int_{}^{}a^n \, dt $$
 
 Where, $a$ is head acceleration, $n$ is chosen to be 2.5 based on the straight-line approximation of the slope of WSTC, and $t$ is time in seconds. An SI value of 1000 corresponds to a 50% probability of injury occurrence. However, some critiques of the SI argue that the straight-line approximation to arrive at n = 2.5 may not be the most appropriate fit, and there is no necessity for the fitted line to be linear (Hodgson et al., 1970).
