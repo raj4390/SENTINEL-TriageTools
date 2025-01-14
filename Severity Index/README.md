@@ -6,6 +6,8 @@ $$ SI =\int_{}^{}a^n \, dt $$
 
 Where, $a$ is head acceleration, $n$ is chosen to be 2.5 based on the straight-line approximation of the slope of WSTC, and $t$ is time in seconds. An SI value of 1000 corresponds to a 50% probability of injury occurrence. However, some critiques of the SI argue that the straight-line approximation to arrive at n = 2.5 may not be the most appropriate fit, and there is no necessity for the fitted line to be linear (Hodgson et al., 1970).
 
+---
+
 ### How the Code Works
 
 This script calculates the **Severity Index (SI)** from acceleration data collected over time. It incorporates preprocessing, filtering, and SI computation through numerical integration. The workflow ensures the results are accurate and applicable to real-world scenarios.
