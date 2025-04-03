@@ -11,17 +11,13 @@ The **GAMBIT (Generalized Acceleration Model for Brain Injury Threshold)** is a 
 
 The GAMBIT model computes the injury risk by using a formula that integrates the effects of both translational and rotational accelerations:
 
-$$\(
-G(t) = \left( \frac{a(t)}{a_c} 
-\right)^n + \left( \frac{a_r(t)}{a_r^c} 
-\right)^m
-\)$$
+$$G = \left[  \left( \frac{a_m}{a_c} \right) + \left( \frac{a_r}{a_r^c} \right)\right]^{1/s}$$
 
 Where:
 - $$\( a(t) \)$$ is the translational acceleration,
 - $$\( a_r(t) \)$$ is the rotational acceleration,
 - $$\( a_c \)$$ and $$\( a_r^c \)$$ are the critical translational and rotational accelerations, respectively, beyond which brain injury is likely,
-- $$\( n \)$$ and $$\( m \)$$ are empirical constants that adjust the influence of each type of acceleration.
+- $$\( n \)$$, $$\( s \)$$ and $$\( m \)$$ are empirical constants that adjust the influence of each type of acceleration.
 
 The value of $$\( G(t) \)$$ can be used to evaluate the likelihood of injury. If $$\( G(t) > 1 \)$$, the injury threshold has been exceeded, and brain injury is more likely. If $$\( G(t) < 1 \)$$, the injury threshold has not been exceeded, and the risk of injury is lower.
 
@@ -60,11 +56,7 @@ Filtering helps in isolating the primary inertial components of the acceleration
 
 Once the data is preprocessed and filtered, the GAMBIT injury criterion is calculated using the formula:
 
-$$\(
-G(t) = \left( frac{a(t)}{a_c} 
-ight)^n + \left( frac{a_r(t)}{a_r^c} 
-ight)^m
-\)$$
+$$G = \left[  \left( \frac{a_m}{a_c} \right) + \left( \frac{a_r}{a_r^c} \right)\right]^{1/s}$$
 
 Where:
 - $$\( G(t) \$$ is the GAMBIT value, representing the likelihood of brain injury.
@@ -73,7 +65,7 @@ Where:
 
 If the value of $$\( G(t) \)$$ exceeds 1, this suggests that the injury threshold has been crossed, indicating a higher likelihood of brain injury. Conversely, if $$\( G(t) \)$$ is less than 1, the risk is considered lower.
 
-This calculation is based on both the instantaneous translational and rotational accelerations measured during the impact event. The empirical constants $$\( n \)$$ and $$\( m \)$$ are adjusted based on available experimental data and the specific context of the crash or impact.
+This calculation is based on both the instantaneous translational and rotational accelerations measured during the impact event. The empirical constants $$\( n \)$$, $$\( s \)$$ and $$\( m \)$$ are adjusted based on available experimental data and the specific context of the crash or impact.
 
 ---
 
