@@ -3,6 +3,8 @@
 
 The **GAMBIT (Generalized Acceleration Model for Brain Injury Threshold)** is a model used to evaluate the likelihood of brain injury based on both translational and rotational accelerations. The model considers the combined effects of these two types of motion during an impact event, such as in vehicle collisions. GAMBIT integrates both translational (linear) and rotational (angular) accelerations to assess the severity of a potential brain injury.
 
+$$\int_{1}^{2}\frac{\frac{d }{dx}}{}$$
+
 ---
 
 ### **Workflow Explanation**
@@ -12,7 +14,9 @@ The **GAMBIT (Generalized Acceleration Model for Brain Injury Threshold)** is a 
 The GAMBIT model computes the injury risk by using a formula that integrates the effects of both translational and rotational accelerations:
 
 \(
-G(t) = \left( rac{a(t)}{a_c} ight)^n + \left( rac{a_r(t)}{a_r^c} ight)^m
+G(t) = \left( rac{a(t)}{a_c} 
+ight)^n + \left( rac{a_r(t)}{a_r^c} 
+ight)^m
 \)
 
 Where:
@@ -59,7 +63,9 @@ Filtering helps in isolating the primary inertial components of the acceleration
 Once the data is preprocessed and filtered, the GAMBIT injury criterion is calculated using the formula:
 
 \(
-G(t) = \left( rac{a(t)}{a_c} ight)^n + \left( rac{a_r(t)}{a_r^c} ight)^m
+G(t) = \left( rac{a(t)}{a_c} 
+ight)^n + \left( rac{a_r(t)}{a_r^c} 
+ight)^m
 \)
 
 Where:
