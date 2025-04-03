@@ -65,7 +65,7 @@ python HIP_Calculator.py --frequency 0.001 --file_path "data.csv" --x_location 2
 #### **2. Data Preprocessing**
 The script reads the input CSV file and extracts acceleration data. It calculates the time at each data point using the provided sampling frequency and computes the magnitude of acceleration as:
 
-$$ ext{magnitude} = frac{\sqrt{x^2 + y^2 + z^2}}{9810}$$
+$$ {magnitude} = \frac{\sqrt{x^2 + y^2 + z^2}}{9810}$$
 
 This formula converts acceleration to G-forces, dividing by 9810 (gravity constant in mm/s²).
 
