@@ -3,8 +3,6 @@
 
 The **GAMBIT (Generalized Acceleration Model for Brain Injury Threshold)** is a model used to evaluate the likelihood of brain injury based on both translational and rotational accelerations. The model considers the combined effects of these two types of motion during an impact event, such as in vehicle collisions. GAMBIT integrates both translational (linear) and rotational (angular) accelerations to assess the severity of a potential brain injury.
 
-$$\int_{1}^{2}\frac{\frac{d }{dx}}{}$$
-
 ---
 
 ### **Workflow Explanation**
@@ -13,19 +11,19 @@ $$\int_{1}^{2}\frac{\frac{d }{dx}}{}$$
 
 The GAMBIT model computes the injury risk by using a formula that integrates the effects of both translational and rotational accelerations:
 
-\(
-G(t) = \left( rac{a(t)}{a_c} 
-ight)^n + \left( rac{a_r(t)}{a_r^c} 
-ight)^m
-\)
+$$\(
+G(t) = \left( \frac{a(t)}{a_c} 
+\right)^n + \left( \frac{a_r(t)}{a_r^c} 
+\right)^m
+\)$$
 
 Where:
-- \( a(t) \) is the translational acceleration,
-- \( a_r(t) \) is the rotational acceleration,
-- \( a_c \) and \( a_r^c \) are the critical translational and rotational accelerations, respectively, beyond which brain injury is likely,
-- \( n \) and \( m \) are empirical constants that adjust the influence of each type of acceleration.
+- $$\( a(t) \)$$ is the translational acceleration,
+- $$\( a_r(t) \)$$ is the rotational acceleration,
+- $$\( a_c \)$$ and $$\( a_r^c \)$$ are the critical translational and rotational accelerations, respectively, beyond which brain injury is likely,
+- $$\( n \)$$ and $$\( m \)$$ are empirical constants that adjust the influence of each type of acceleration.
 
-The value of \( G(t) \) can be used to evaluate the likelihood of injury. If \( G(t) > 1 \), the injury threshold has been exceeded, and brain injury is more likely. If \( G(t) < 1 \), the injury threshold has not been exceeded, and the risk of injury is lower.
+The value of $$\( G(t) \)$$ can be used to evaluate the likelihood of injury. If $$\( G(t) > 1 \)$$, the injury threshold has been exceeded, and brain injury is more likely. If $$\( G(t) < 1 \)$$, the injury threshold has not been exceeded, and the risk of injury is lower.
 
 ---
 
@@ -38,9 +36,9 @@ To compute the GAMBIT value, the first step is to gather and preprocess the acce
 2. **Acceleration Data**: The raw acceleration values (both translational and rotational) need to be extracted from the dataset. These values are often measured using accelerometers or sensors placed on a rigid body (e.g., headform in crash tests).
 3. **Magnitude Calculation**: Using the formula:
 
-\(
-	ext{magnitude} = rac{\sqrt{x^2 + y^2 + z^2}}{9810}
-\)
+$$\(
+	{magnitude} = \frac{\sqrt{x^2 + y^2 + z^2}}{9810}
+\)$$
 
 This formula converts the measured acceleration values into G-forces, dividing by 9810 (gravity constant in mm/s²). This step ensures that the data is in an appropriate scale for further analysis.
 
@@ -62,20 +60,20 @@ Filtering helps in isolating the primary inertial components of the acceleration
 
 Once the data is preprocessed and filtered, the GAMBIT injury criterion is calculated using the formula:
 
-\(
-G(t) = \left( rac{a(t)}{a_c} 
-ight)^n + \left( rac{a_r(t)}{a_r^c} 
+$$\(
+G(t) = \left( frac{a(t)}{a_c} 
+ight)^n + \left( frac{a_r(t)}{a_r^c} 
 ight)^m
-\)
+\)$$
 
 Where:
-- \( G(t) \) is the GAMBIT value, representing the likelihood of brain injury.
-- \( a(t) \) is the translational acceleration.
-- \( a_r(t) \) is the rotational acceleration.
+- $$\( G(t) \$$ is the GAMBIT value, representing the likelihood of brain injury.
+- $$\( a(t) \)$$ is the translational acceleration.
+- $$\( a_r(t) \)$$ is the rotational acceleration.
 
-If the value of \( G(t) \) exceeds 1, this suggests that the injury threshold has been crossed, indicating a higher likelihood of brain injury. Conversely, if \( G(t) \) is less than 1, the risk is considered lower.
+If the value of $$\( G(t) \)$$ exceeds 1, this suggests that the injury threshold has been crossed, indicating a higher likelihood of brain injury. Conversely, if $$\( G(t) \)$$ is less than 1, the risk is considered lower.
 
-This calculation is based on both the instantaneous translational and rotational accelerations measured during the impact event. The empirical constants \( n \) and \( m \) are adjusted based on available experimental data and the specific context of the crash or impact.
+This calculation is based on both the instantaneous translational and rotational accelerations measured during the impact event. The empirical constants $$\( n \)$$ and $$\( m \)$$ are adjusted based on available experimental data and the specific context of the crash or impact.
 
 ---
 
