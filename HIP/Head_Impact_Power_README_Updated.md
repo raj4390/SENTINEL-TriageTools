@@ -9,9 +9,7 @@ The **Head Impact Power (HIP)** is a biomechanical metric that quantifies the ra
 
 The **HIP** is calculated using the following formula:
 
-$$
-HIP = \int \left( lpha_x \cdot \dot{\omega}_x + lpha_y \cdot \dot{\omega}_y + lpha_z \cdot \dot{\omega}_z ight) dt
-$$
+$$HIP = \int \left( \alpha_x \cdot \dot{\omega}_x + \alpha_y \cdot \dot{\omega}_y + \alpha_z \cdot \dot{\omega}_z \right) dt$$
 
 Where:
 - \( lpha_x, lpha_y, lpha_z \) are the **angular accelerations** along the three axes (X, Y, Z),
