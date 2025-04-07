@@ -12,12 +12,6 @@ The **HIP** is calculated using the following formula:
 $$HIP = 4.50 \left( \int a_x \cdot dt \right) + 4.50 \left( \int a_y \cdot dt \right) + 4.50 \left( \int a_z \cdot dt \right) + 0.016 \left( \int \alpha_x \cdot dt \right) + 0.024 \left( \int \alpha_y \cdot dt \right) + 0.022 \left( \int \alpha_z \cdot dt \right)$$
 
 Where:
-- $$a_x, a_y, a_z$$ are the **linear accelerations** along the three axes (X, Y, Z),
-- $$\alpha_x, \alpha_y, \alpha_z$$ are the **angular accelerations** along the three axes (X, Y, Z),
-- $$t$$ represents **time**.
-
-This equation integrates the contributions from both **linear** and **rotational motion** to determine the **rate of change** in kinetic energy during the impact event. The **maximum** value of this power is used to define the **maximum Head Impact Power (HIP)**.
-Where:
 - **$$\(\text{HIP}\)$$**: Head Impact Power (in kilowatts, kW).
 - **$$\(a_x, a_y, a_z\)$$**: Linear accelerations along the X, Y, and Z axes (in $$\(m/s^2\)$$).
 - **$$\(\alpha_x, \alpha_y, \alpha_z\)$$**: Angular accelerations about the X, Y, and Z axes (in $$\(rad/s^2\)$$).
@@ -27,6 +21,7 @@ Where:
   - **4.50**: Mass of the human head (approx. 4.5 kg).
   - **0.016, 0.024, 0.022**: Mass moments of inertia about the X, Y, and Z axes (in $$\(Nms^2\)$$).
 
+This equation integrates the contributions from both **linear** and **rotational motion** to determine the **rate of change** in kinetic energy during the impact event. The **maximum** value of this power is used to define the **maximum Head Impact Power (HIP)**.
 The **maximum HIP $$(\(\text{HIP}_m\))$$** is the peak value of this function during an impact, used as the injury assessment index.
 ---
 
