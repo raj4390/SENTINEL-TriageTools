@@ -145,10 +145,10 @@ class HIPCalculator:
 
 if __name__ == "__main__":
     # Command-line argument parsing with default file_path
-    parser = argparse.ArgumentParser(description="Calculate Head Impact Power (HIP) from CSV data.")
-    parser.add_argument("--frequency", type=float, required=True, help="Sampling frequency (time step in seconds, e.g., 0.0001 for 10 kHz)")
+    parser = argparse.ArgumentParser(description="Calculate GAMBIT from CSV data per Newman (1985).")
+    parser.add_argument("--frequency", type=float, required=True, help="Sampling frequency (time step in seconds, e.g., 0.001 for 1 kHz)")
     parser.add_argument("--file_path", type=str, 
-                        default='C:\\Users\\ae4514\\OneDrive - Coventry University\\Coventry Work\\SENTINEL\\SENTINEL-TriageTools\\HIP\\impact_data.csv', 
+                        default='impact_data.csv',  # Adjust default path as needed
                         help="Path to CSV file with acceleration data")
     args = parser.parse_args()
 
