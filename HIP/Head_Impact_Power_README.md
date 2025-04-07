@@ -9,12 +9,12 @@ The **Head Impact Power (HIP)** is a biomechanical metric that quantifies the ra
 
 The **HIP** is calculated using the following formula:
 
-$$$HIP = 4.50 \left( \int a_x \cdot dt \right) + 4.50 \left( \int a_y \cdot dt \right) + 4.50 \left( \int a_z \cdot dt \right) + 0.016 \left( \int \alpha_x \cdot dt \right) + 0.024 \left( \int \alpha_y \cdot dt \right) + 0.022 \left( \int \alpha_z \cdot dt \right)$$
+$$HIP = 4.50 \left( \int a_x \cdot dt \right) + 4.50 \left( \int a_y \cdot dt \right) + 4.50 \left( \int a_z \cdot dt \right) + 0.016 \left( \int \alpha_x \cdot dt \right) + 0.024 \left( \int \alpha_y \cdot dt \right) + 0.022 \left( \int \alpha_z \cdot dt \right)$$
 
 Where:
-- $$ a_x, a_y, a_z $$ are the **linear accelerations** along the three axes (X, Y, Z),
-- $$ \alpha_x, \alpha_y, \alpha_z $$ are the **angular accelerations** along the three axes (X, Y, Z),
-- $$ t $$ represents **time**.
+- $$a_x, a_y, a_z$$ are the **linear accelerations** along the three axes (X, Y, Z),
+- $$\alpha_x, \alpha_y, \alpha_z$$ are the **angular accelerations** along the three axes (X, Y, Z),
+- $$t$$ represents **time**.
 
 This equation integrates the contributions from both **linear** and **rotational motion** to determine the **rate of change** in kinetic energy during the impact event. The **maximum** value of this power is used to define the **maximum Head Impact Power (HIP)**.
 
