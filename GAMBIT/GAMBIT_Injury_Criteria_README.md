@@ -103,10 +103,9 @@ Time,ax,ay,az,alphax,alphay,alphaz
 0.000,100,50,30,4000,5000,2000
 0.001,150,70,40,6000,7000,3000
 0.002,200,90,50,8000,9000,4000
+```
 ...
-
-Steps:
-
+**Steps**:
 1. Filter Data: Apply a 400-500 Hz Butterworth filter to all six components.
 Compute Resultant Maxima:
 2. At each time step, calculate:
@@ -119,8 +118,10 @@ Assume these are the maxima: ( a_m = 222.5 , G ), ( \alpha_m = 12,083 , rad/s^2 
 3. Compute GAMBIT:
 ( G = \frac{a_m}{250} + \frac{\alpha_m}{10,000} = \frac{222.5}{250} + \frac{12,083}{10,000} \approx 0.89 + 1.208 = 2.098 ).
 4 Output: ( G = 2.098 ) (Exceeds threshold, injury likely).
-
 GAMBIT Value: 2.098 (Exceeds threshold, injury likely)
+### **Flowchart**
+```plaintext
+
 +-----------------------+
 | Start                 |
 +-----------------------+
@@ -164,7 +165,7 @@ GAMBIT Value: 2.098 (Exceeds threshold, injury likely)
 +-----------------------+
 | End                   |
 +-----------------------+
-
+```
 
 ### **Reference**
 
