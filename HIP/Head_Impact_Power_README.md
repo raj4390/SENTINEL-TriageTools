@@ -17,7 +17,17 @@ Where:
 - $$t$$ represents **time**.
 
 This equation integrates the contributions from both **linear** and **rotational motion** to determine the **rate of change** in kinetic energy during the impact event. The **maximum** value of this power is used to define the **maximum Head Impact Power (HIP)**.
+Where:
+- **$$\(\text{HIP}\)$$**: Head Impact Power (in kilowatts, kW).
+- **$$\(a_x, a_y, a_z\)$$**: Linear accelerations along the X, Y, and Z axes (in $$\(m/s^2\)$$).
+- **$$\(\alpha_x, \alpha_y, \alpha_z\)$$**: Angular accelerations about the X, Y, and Z axes (in $$\(rad/s^2\)$$).
+- **$$\(\int a_x \, dt, \int a_y \, dt, \int a_z \, dt\)$$**: Time integrals of linear accelerations, representing velocity changes (in $$\(m/s\)$$).
+- **$$\(\int \alpha_x \, dt, \int \alpha_y \, dt, \int \alpha_z \, dt\)$$**: Time integrals of angular accelerations, representing angular velocity changes (in $$\(rad/s\)$$).
+- **Coefficients**:
+  - **4.50**: Mass of the human head (approx. 4.5 kg).
+  - **0.016, 0.024, 0.022**: Mass moments of inertia about the X, Y, and Z axes (in $$\(Nms^2\)$$).
 
+The **maximum HIP (\(\text{HIP}_m\))** is the peak value of this function during an impact, used as the injury assessment index.
 ---
 
 ### **Background**
@@ -56,36 +66,28 @@ The following steps outline the workflow for calculating the **Head Impact Power
 
 #### **1. Input Data and Configuration**
 The script accepts inputs via command-line arguments, including:
-- **Sampling frequency**: The time interval between successive data points.
+- **Sampling frequency**: Time interval between data points (e.g., 0.0001 s for 10 kHz)..
 - **Path to the CSV file**: The file containing raw acceleration data.
-- **Column indices**: Identifiers for the columns containing X, Y, and Z acceleration data.
+- **Column indices**: Columns for $$\(a_x, a_y, a_z, \alpha_x, \alpha_y, \alpha_z\)$$.
 
-Example:
-```bash
-python HIP_Calculator.py --frequency 0.001 --file_path "data.csv" --x_location 2 --y_location 3 --z_location 4
-```
 
 #### **2. Data Preprocessing**
-The script reads the input CSV file and extracts acceleration data. It calculates the time at each data point using the provided sampling frequency and computes the magnitude of acceleration as:
+Read CSV and extract acceleration data.
+Compute time array using sampling frequency.
+Filter data per SAE J211 (CFC 1000) and re-filter at CFC 180 to remove noise (as per document).
 
-$$ {magnitude} = \frac{\sqrt{x^2 + y^2 + z^2}}{9810}$$
 
-This formula converts acceleration to G-forces, dividing by 9810 (gravity constant in mm/s²).
+#### **3. Head Impact Power Calculation**
+Integrate accelerations numerically (e.g., trapezoidal rule) to compute $$(\int a_i , dt)$$ and $$(\int \alpha_i , dt)$$.
+Apply coefficients and sum terms to get HIP at each time step.
+Identify $$(\text{HIP}_m)$$ as the maximum value.
 
-#### **3. Butterworth Low-Pass Filtering**
-To reduce noise and high-frequency components, the script applies a **Butterworth low-pass filter**:
-- **Cutoff Frequency**: 1650 Hz (default).
-- **Order**: 2 (default).
-
-#### **4. Head Impact Power Calculation**
-The script calculates HIP using angular acceleration and velocity data along three axes. It integrates the contributions from each axis to compute the total power.
-
-#### **5. Output Results**
-The script prints the calculated HIP value to the terminal:
+#### **4. Output Results**
+Display $$(\text{HIP}_m)$$ and optionally the time of occurrence.
 
 **Example Output**:
 ```
-The Head Impact Power (HIP) value is: 15.67 kW
+Maximum Head Impact Power $$(HIP_m)$$: 15.67 kW at t = 0.012 s
 ```
 
 ---
@@ -94,9 +96,9 @@ The Head Impact Power (HIP) value is: 15.67 kW
 
 **Input CSV** (Sample rows):
 ```csv
-X,Y,Z
-1.23,-0.45,0.67
-1.30,-0.50,0.72
+Time,ax,ay,az,alphax,alphay,alphaz
+0.0000,1.23,-0.45,0.67,50.0,-20.0,10.0
+0.0001,1.30,-0.50,0.72,55.0,-25.0,12.0
 ...
 ```
 
@@ -115,56 +117,54 @@ The Head Impact Power (HIP) value is: 12.34 kW
 ---
 
 ### **Flowchart**
-
 ```plaintext
-  +-------------------------------------+
-  | Start                               |
-  +-------------------------------------+
-               |
-               v
-  +-------------------------------------+
-  | Parse arguments                     |
-  | (frequency, file_path, x, y, z)     |
-  +-------------------------------------+
-               |
-               v
-  +-------------------------------------+
-  | Initialize HICCalculator            |
-  +-------------------------------------+
-               |
-               v
-  +-------------------------------------+
-  | Read and process CSV data           |
-  | (calculate time, magnitude, filter) |
-  +-------------------------------------+
-               |
-               v
-  +-------------------------------------+
-  | Initialize HIC calculation loop     |
-  +-------------------------------------+
-               |
-               v
-  +-------------------------------------+
-  | For each time window (0 - 15ms):    |
-  | - Calculate HIC                     |
-  | - Store HIC value and time window   |
-  +-------------------------------------+
-               |
-               v
-  +-------------------------------------+
-  | Find max HIC and corresponding      |
-  | time window                         |
-  +-------------------------------------+
-               |
-               v
-  +-------------------------------------+
-  | Output max HIC and time window      |
-  +-------------------------------------+
-               |
-               v
-  +-------------------------------------+
-  | End                                 |
-  +-------------------------------------+
++-----------------------+
+| Start                 |
++-----------------------+
+         |
+         v
++-----------------------+
+| Parse Arguments       |
+| (freq, file, cols)    |
++-----------------------+
+         |
+         v
++-----------------------+
+| Read CSV Data         |
+| (ax, ay, az, αx, αy, αz) |
++-----------------------+
+         |
+         v
++-----------------------+
+| Filter Data (CFC 180) |
++-----------------------+
+         |
+         v
++-----------------------+
+| Compute Integrals     |
+| (∫a_dt, ∫α_dt)        |
++-----------------------+
+         |
+         v
++-----------------------+
+| Calculate HIP(t)      |
+| Apply Coefficients    |
++-----------------------+
+         |
+         v
++-----------------------+
+| Find HIP_m            |
++-----------------------+
+         |
+         v
++-----------------------+
+| Output HIP_m          |
++-----------------------+
+         |
+         v
++-----------------------+
+| End                   |
++-----------------------+
 ```
 ---
 
