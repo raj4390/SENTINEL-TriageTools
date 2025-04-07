@@ -1,123 +1,139 @@
-import os
-import csv
 import numpy as np
-from scipy.signal import butter, lfilter
+from scipy.signal import butter, filtfilt
 import argparse
+import csv
+import os
+import scipy
 
-class GambitCalculator:
-    def __init__(self, frequency: float, cutoff: float = 1650.0, order: int = 2):
+class GAMBITCalculator:
+    def __init__(self, frequency: float):
+        """Initialize with sampling frequency (time step in seconds)."""
         self.frequency = frequency
-        self.cutoff = cutoff
-        self.order = order
+        self.dt = frequency  # Time step (e.g., 0.001 s for 1 kHz)
+        self.a_c = 250.0  # Critical translational acceleration threshold (G), per Newman (1985), page 10
+        self.alpha_c = 10000.0  # Critical rotational acceleration threshold (rad/s²), per Newman (1985), page 10
 
-    def butter_lowpass(self):
+    def butter_lowpass(self, cutoff: float, order: int = 4):
         """
-        Creates Butterworth low-pass filter coefficients.
+        Create Butterworth low-pass filter coefficients.
+
+        Args:
+            cutoff (float): Cutoff frequency in Hz (400-500 Hz per Newman, page 4).
+            order (int): Filter order (4th order per Newman, page 4).
 
         Returns:
             Tuple: Filter coefficients (b, a).
         """
-        nyquist = 0.5 / self.frequency
-        normal_cutoff = self.cutoff / nyquist
-        return butter(self.order, normal_cutoff, btype='low', analog=False)
+        nyquist = 0.5 / self.dt  # Nyquist frequency
+        normal_cutoff = cutoff / nyquist
+        b, a = butter(order, normal_cutoff, btype='low', analog=False)
+        return b, a
 
-    def butter_lowpass_filter(self, data: np.ndarray) -> np.ndarray:
+    def apply_filter(self, data: np.ndarray) -> np.ndarray:
         """
-        Applies a Butterworth low-pass filter to the data.
+        Apply a 400 Hz Butterworth filter per Newman (1985), page 4.
 
         Args:
-            data (np.ndarray): The data to filter.
+            data (np.ndarray): Input data array (e.g., acceleration time series).
 
         Returns:
             np.ndarray: Filtered data.
         """
-        b, a = self.butter_lowpass()
-        return lfilter(b, a, data)
+        b, a = self.butter_lowpass(cutoff=400.0)  # 400-500 Hz range, using 400 Hz as conservative choice
+        filtered = filtfilt(b, a, data)
+        return filtered
 
     @staticmethod
-    def read_csv(path: str) -> np.ndarray:
+    def read_csv(file_path: str) -> np.ndarray:
         """
-        Reads a CSV file and returns the content as a numpy array.
+        Read CSV file with Time, ax, ay, az, alphax, alphay, alphaz columns.
 
         Args:
-            path (str): Path to the CSV file.
+            file_path (str): Path to CSV file.
 
         Returns:
-            np.ndarray: Parsed CSV data.
+            np.ndarray: Data array with shape (n_samples, 7).
         """
-        try:
-            with open(path, "r") as f:
-                reader = csv.reader(f)
-                next(reader)  # Skip header row
-                return np.array([list(map(float, row)) for row in reader])
-        except FileNotFoundError:
-            raise FileNotFoundError(f"File not found: {path}")
-        except Exception as e:
-            raise RuntimeError(f"Error reading file {path}: {e}")
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"File not found: {file_path}")
+        with open(file_path, 'r') as f:
+            reader = csv.reader(f)
+            header = next(reader)  # Skip header
+            expected_header = ['Time', 'ax', 'ay', 'az', 'alphax', 'alphay', 'alphaz']
+            if len(header) != 7 or header != expected_header:
+                raise ValueError("CSV must have columns: Time, ax, ay, az, alphax, alphay, alphaz")
+            data = np.array([list(map(float, row)) for row in reader])
+        return data
 
-    def calculate_magnitudes(self, data: np.ndarray, x_idx: int, y_idx: int, z_idx: int) -> np.ndarray:
+    def calculate_gambit(self, data: np.ndarray) -> float:
         """
-        Calculates the magnitude of acceleration from x, y, and z components.
+        Calculate GAMBIT per simplified formula G = (a_m / 250) + (alpha_m / 10000) from Newman (1985), page 10.
 
         Args:
-            data (np.ndarray): Acceleration data.
-            x_idx (int): Column index for X data.
-            y_idx (int): Column index for Y data.
-            z_idx (int): Column index for Z data.
+            data (np.ndarray): Array with columns [Time, ax, ay, az, alphax, alphay, alphaz].
+                              ax, ay, az in G; alphax, alphay, alphaz in rad/s².
 
         Returns:
-            np.ndarray: Array of magnitudes.
+            float: GAMBIT value (G).
         """
-        magnitudes = np.sqrt(data[:, x_idx - 1] ** 2 + 
-                             data[:, y_idx - 1] ** 2 + 
-                             data[:, z_idx - 1] ** 2) / 9810  # Convert to G
-        return magnitudes
+        # Extract acceleration components
+        ax, ay, az = data[:, 1], data[:, 2], data[:, 3]
+        alphax, alphay, alphaz = data[:, 4], data[:, 5], data[:, 6]
 
-    def calculate_gambit(self, translational_acc: np.ndarray, rotational_acc: np.ndarray) -> float:
+        # Apply 400 Hz filter to all components (per Newman, page 4)
+        ax_filt = self.apply_filter(ax)
+        ay_filt = self.apply_filter(ay)
+        az_filt = self.apply_filter(az)
+        alphax_filt = self.apply_filter(alphax)
+        alphay_filt = self.apply_filter(alphay)
+        alphaz_filt = self.apply_filter(alphaz)
+
+        # Compute resultant accelerations at each time step
+        a_resultant = np.sqrt(ax_filt**2 + ay_filt**2 + az_filt**2)  # Resultant translational acceleration (G)
+        alpha_resultant = np.sqrt(alphax_filt**2 + alphay_filt**2 + alphaz_filt**2)  # Resultant rotational acceleration (rad/s²)
+
+        # Extract maximum values (a_m and alpha_m)
+        a_m = np.max(a_resultant)
+        alpha_m = np.max(alpha_resultant)
+
+        # Calculate GAMBIT (simplified linear form, page 10)
+        gambit = (a_m / self.a_c) + (alpha_m / self.alpha_c)
+        return gambit
+
+    def process_file(self, file_path: str) -> float:
         """
-        Calculates the GAMBIT Injury Criterion.
+        Process CSV file and calculate GAMBIT.
 
         Args:
-            translational_acc (np.ndarray): Array of translational accelerations.
-            rotational_acc (np.ndarray): Array of rotational accelerations.
+            file_path (str): Path to CSV file.
 
         Returns:
-            float: GAMBIT value.
+            float: GAMBIT value (G).
         """
-        gambit_value = (translational_acc ** 1 + rotational_acc ** 1) ** (1/1)  # Linear combination
-        return np.max(gambit_value)
-
-    def process_file(self, file_path: str, x_idx: int, y_idx: int, z_idx: int) -> float:
-        """
-        Reads a CSV file, processes the data, and calculates the GAMBIT Injury Criterion.
-
-        Args:
-            file_path (str): Path to the CSV file.
-            x_idx (int): X column index.
-            y_idx (int): Y column index.
-            z_idx (int): Z column index.
-
-        Returns:
-            float: GAMBIT Injury Criterion value.
-        """
-        # Read and process data
         data = self.read_csv(file_path)
-        translational_acc = self.calculate_magnitudes(data, x_idx, y_idx, z_idx)
-        rotational_acc = translational_acc  # In a real case, replace this with rotational data
-
-        # Filter data
-        filtered_translational = self.butter_lowpass_filter(translational_acc)
-        filtered_rotational = self.butter_lowpass_filter(rotational_acc)
-
-        # Calculate GAMBIT
-        return self.calculate_gambit(filtered_translational, filtered_rotational)
+        gambit_value = self.calculate_gambit(data)
+        return gambit_value
 
 if __name__ == "__main__":
-    # Define file path and arguments as provided
-    args = argparse.Namespace(frequency=0.0001, 
-                              file_path='C:\\Users\\ae4514\\OneDrive - Coventry University\\Coventry Work\\SENTINEL\\Code\\SENTINEL-TriageTools-main\\SENTINEL-TriageTools-main\\Severity Index\\EURONCAP_ADULT_VALIDATED_OPENRADIOSS_DoE1T01.csv', 
-                              x_location=89, y_location=90, z_location=91)
+    # Command-line argument parsing with default file_path
+    parser = argparse.ArgumentParser(description="Calculate GAMBIT from CSV data per Newman (1985).")
+    parser.add_argument("--frequency", type=float, required=True, help="Sampling frequency (time step in seconds, e.g., 0.001 for 1 kHz)")
+    parser.add_argument("--file_path", type=str, 
+                        default='impact_data.csv',  # Adjust default path as needed
+                        help="Path to CSV file with acceleration data")
+    args = parser.parse_args()
 
-    gambit_calculator = GambitCalculator(args.frequency)
-    gambit_value = gambit_calculator.process_file(args.file_path, args.x_location, args.y_location, args.z_location)
-    print(f"The GAMBIT Injury Criterion (G) value is {gambit_value:.2f}")
+    # Initialize calculator and compute GAMBIT
+    gambit_calculator = GAMBITCalculator(args.frequency)
+    try:
+        gambit_value = gambit_calculator.process_file(args.file_path)
+        print(f"GAMBIT Value: {gambit_value:.3f}")
+        if gambit_value <= 1.0:
+            print("Result: No unacceptable injury (G ≤ 1)")
+        else:
+            print("Result: Exceeds threshold, injury likely (G > 1)")
+    except Exception as e:
+        print(f"Error: {e}")
+        
+        
+    # Example usage: python GAMBIT_Calculator.py --frequency 0.001 --file_path "impact_data.csv"

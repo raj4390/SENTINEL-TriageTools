@@ -5,9 +5,6 @@ import csv
 import os
 import scipy
 
-# Verify the version of scipy
-print(scipy.__version__)
-
 class HIPCalculator:
     def __init__(self, frequency: float):
         """Initialize with sampling frequency (time step in seconds)."""
@@ -162,4 +159,6 @@ if __name__ == "__main__":
         print(f"Maximum Head Impact Power (HIP_m): {hip_value:.2f} kW")
     except Exception as e:
         print(f"Error: {e}")
+        
+        
   #python HIP_Calculator.py --frequency 0.0001 --file_path "impact_data.csv"
