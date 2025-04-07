@@ -20,7 +20,7 @@ Where:
 - **Coefficients**:
   - **4.50**: Mass of the human head (approx. 4.5 kg).
   - **0.016, 0.024, 0.022**: Mass moments of inertia about the X, Y, and Z axes (in $$\(Nms^2\)$$).
-
+---
 This equation integrates the contributions from both **linear** and **rotational motion** to determine the **rate of change** in kinetic energy during the impact event. The **maximum** value of this power is used to define the **maximum Head Impact Power (HIP)**.
 The **maximum HIP $$(\(\text{HIP}_m\))$$** is the peak value of this function during an impact, used as the injury assessment index.
 ---
