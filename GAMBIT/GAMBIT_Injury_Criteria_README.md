@@ -118,8 +118,11 @@ $$( \alpha = \sqrt{8000^2 + 9000^2 + 4000^2} \approx 12,083 , rad/s^2 ).$$
 
 Assume these are the maxima: $$( a_m = 222.5 , G ), ( \alpha_m = 12,083 , rad/s^2 ).$$
 3. Compute GAMBIT:
+
 $$( G = \frac{a_m}{250} + \frac{\alpha_m}{10,000} = \frac{222.5}{250} + \frac{12,083}{10,000} \approx 0.89 + 1.208 = 2.098 ).$$
+
 4 Output: ( G = 2.098 ) (Exceeds threshold, injury likely).
+
 GAMBIT Value: 2.098 (Exceeds threshold, injury likely)
 ### **Flowchart**
 ```plaintext
