@@ -87,7 +87,7 @@ Display $$(\text{HIP}_m)$$ and optionally the time of occurrence.
 
 **Example Output**:
 ```
-Maximum Head Impact Power $$(HIP_m)$$: 15.67 kW at t = 0.012 s
+Maximum Head Impact Power $$(\text{HIP}_m)$$: 15.67 kW at t = 0.012 s
 ```
 
 ---
@@ -105,7 +105,7 @@ Time,ax,ay,az,alphax,alphay,alphaz
 **Steps**:
 1. Run script with specified arguments.
 2. Script processes data, filters noise, and computes HIP over time.
-3. Outputs (\text{HIP}_m).
+3. Outputs $$(\text{HIP}_m)$$.
 
 **Output Example**:
 ```
