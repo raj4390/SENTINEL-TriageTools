@@ -9,12 +9,12 @@ The **Head Impact Power (HIP)** is a biomechanical metric that quantifies the ra
 
 The **HIP** is calculated using the following formula:
 
-$$HIP = \int \left( \alpha_x \cdot \\dot{\omega}_x + \alpha_y \cdot \\dot{\omega}_y + \alpha_z \cdot \\dot{\omega}_z \right) dt$$
+$$$HIP = 4.50 \left( \int a_x \cdot dt \right) + 4.50 \left( \int a_y \cdot dt \right) + 4.50 \left( \int a_z \cdot dt \right) + 0.016 \left( \int \alpha_x \cdot dt \right) + 0.024 \left( \int \alpha_y \cdot dt \right) + 0.022 \left( \int \alpha_z \cdot dt \right)$$
 
 Where:
-- $$\( \alpha_x, \alpha_y, \alpha_z \)$$ are the **angular accelerations** along the three axes (X, Y, Z),
-- $$\( \\dot{\omega}_x, \\dot{\omega}_y, \\dot{\omega}_z \)$$ are the **angular velocities** along the three axes (X, Y, Z),
-- $$\( t \)$$ represents **time**.
+- $$ a_x, a_y, a_z $$ are the **linear accelerations** along the three axes (X, Y, Z),
+- $$ \alpha_x, \alpha_y, \alpha_z $$ are the **angular accelerations** along the three axes (X, Y, Z),
+- $$ t $$ represents **time**.
 
 This equation integrates the contributions from both **linear** and **rotational motion** to determine the **rate of change** in kinetic energy during the impact event. The **maximum** value of this power is used to define the **maximum Head Impact Power (HIP)**.
 
@@ -28,14 +28,17 @@ The core idea is that head injury severity correlates with the maximum rate at w
 
 ---
 
-### **Data Requirements**
+## Data Requirements for HIP Calculation
 
-To calculate HIP, the following data is required:
-1. **Angular accelerations** $$(\( \alpha_x, \alpha_y, \alpha_z \))$$: These measure the rotational acceleration of the head along the three axes (X, Y, Z). They are usually recorded using accelerometers or motion capture systems.
-2. **Angular velocities** $$(\( \\dot{\omega}_x, \\dot{\omega}_y, \\dot{\omega}_z \))$$: These describe the rate of change of the angular displacement of the head. They are calculated from the acceleration data using integration.
-3. **Time**: The time intervals between measurements are necessary for accurate integration.
-4. **Kinematic Data**: These values are often collected from video recordings, simulation models, or instrumented headforms, such as those used in crash tests and sports injury studies.
+According to the formula for calculating HIP, the following data is required:
 
+1. **Linear accelerations** $$(a_x, a_y, a_z)$$: These represent the accelerations of the head along the three axes (X, Y, Z). They are typically measured using accelerometers or motion capture systems.
+
+2. **Angular accelerations** $$(\alpha_x, \alpha_y, \alpha_z)$$: These describe the rotational accelerations of the head along the three axes (X, Y, Z). These are also measured using accelerometers or motion capture systems.
+
+3. **Time intervals**: The time between data points is necessary for accurate integration of the accelerations to calculate the rate of change in kinetic energy.
+
+4. **Kinematic Data**: These values include both linear and angular velocities and are often collected from video recordings, simulation models, or instrumented headforms used in crash tests and sports injury studies. These velocities are calculated by integrating the corresponding accelerations over time.
 ---
 
 ### **Interpretation and Usage**
