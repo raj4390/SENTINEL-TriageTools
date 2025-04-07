@@ -109,11 +109,13 @@ Time,ax,ay,az,alphax,alphay,alphaz
 1. Filter Data: Apply a 400-500 Hz Butterworth filter to all six components.
 Compute Resultant Maxima:
 2. At each time step, calculate:
-$$( a(t) = \sqrt{a_x(t)^2 + a_y(t)^2 + a_z(t)^2} ).$$
+$$( a(t) = \sqrt{a_x(t)^2 + a_y(t)^2 + a_z(t)^2} ).$$ and 
 $$( \alpha(t) = \sqrt{\alpha_x(t)^2 + \alpha_y(t)^2 + \alpha_z(t)^2} )$$.
+
 For the sample data at ( t = 0.002 ):
 $$( a = \sqrt{200^2 + 90^2 + 50^2} \approx 222.5 , G ).$$
 $$( \alpha = \sqrt{8000^2 + 9000^2 + 4000^2} \approx 12,083 , rad/s^2 ).$$
+
 Assume these are the maxima: $$( a_m = 222.5 , G ), ( \alpha_m = 12,083 , rad/s^2 ).$$
 3. Compute GAMBIT:
 $$( G = \frac{a_m}{250} + \frac{\alpha_m}{10,000} = \frac{222.5}{250} + \frac{12,083}{10,000} \approx 0.89 + 1.208 = 2.098 ).$$
