@@ -103,11 +103,9 @@ Time,ax,ay,az,alphax,alphay,alphaz
 ```
 
 **Steps**:
-1. User specifies the file path and column indices for X, Y, Z.  
-2. The script computes time and acceleration magnitude for each row.
-3. Magnitudes are filtered using a low-pass filter.
-4. HIP is calculated for multiple overlapping time windows.
-5. The script outputs the maximum HIP value and the time window.
+1. Run script with specified arguments.
+2. Script processes data, filters noise, and computes HIP over time.
+3. Outputs (\text{HIP}_m).
 
 **Output Example**:
 ```
