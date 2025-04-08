@@ -22,7 +22,6 @@ Where:
   - $$\( n = m = s = 1 \)$$: Linear weighting (G1, a straight-line boundary).
   - $$\( n = m = s = 2 \)$$: Elliptical weighting (G2, a curved boundary).
 
-
 The simplified GAMBIT, based on maximum resultant values and linear weighting, is:
 
 $$ G = \frac{a_m}{250} + \frac{\alpha_m}{10,000} \leq 1 $$
@@ -33,7 +32,7 @@ Where:
 - **$$\( G \leq 1 \)$$**: Indicates no "unacceptable" injury; $$\( G > 1 \)$$ suggests injury.
 
 The simplified form uses $$\( a_c = 250 \, G \)$$ and $$\( \alpha_c = 10,000 \, rad/s^2 \)$$ as critical thresholds, derived from limited data and consistent with helmet evaluation standards.
-
+The Python code for GAMBIT employs a linear weighting approach.
 ---
 
 ## Background
