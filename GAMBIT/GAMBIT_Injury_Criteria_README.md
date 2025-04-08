@@ -22,6 +22,7 @@ Where:
   - $$\( n = m = s = 1 \)$$: Linear weighting (G1, a straight-line boundary).
   - $$\( n = m = s = 2 \)$$: Elliptical weighting (G2, a curved boundary).
 
+
 The simplified GAMBIT, based on maximum resultant values and linear weighting, is:
 
 $$ G = \frac{a_m}{250} + \frac{\alpha_m}{10,000} \leq 1 $$

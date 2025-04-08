@@ -76,6 +76,7 @@ class GAMBITCalculator:
         Returns:
             float: GAMBIT value (G).
         """
+        print("GAMBIT model used in the provided Python code is the linear method")
         # Extract acceleration components
         ax, ay, az = data[:, 1], data[:, 2], data[:, 3]
         alphax, alphay, alphaz = data[:, 4], data[:, 5], data[:, 6]
